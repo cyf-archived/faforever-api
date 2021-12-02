@@ -666,6 +666,14 @@
     multer "1.4.3"
     tslib "2.3.1"
 
+"@nestjs/schedule@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.npmmirror.com/@nestjs/schedule/download/@nestjs/schedule-1.0.2.tgz#9c921105deabf91274479888c9b1df284bb3c38b"
+  integrity sha512-GGRehpSm0nCthYNxAGdTzondPrRvurtKnkQCzIb3Tccqq6PhfS2QiHMwDaCel5/4jhYbR/lZR9UsVr6KSJc2Xg==
+  dependencies:
+    cron "1.7.2"
+    uuid "8.3.2"
+
 "@nestjs/schematics@^8.0.0", "@nestjs/schematics@^8.0.3":
   version "8.0.5"
   resolved "https://registry.npmmirror.com/@nestjs/schematics/download/@nestjs/schematics-8.0.5.tgz#7154be7d85a135ea75bb275db042c2a663677a48"
@@ -795,13 +803,6 @@
     "@types/connect" "*"
     "@types/node" "*"
 
-"@types/concat-stream@^1.6.0":
-  version "1.6.1"
-  resolved "https://registry.npmmirror.com/@types/concat-stream/download/@types/concat-stream-1.6.1.tgz#24bcfc101ecf68e886aaedce60dfd74b632a1b74"
-  integrity sha1-JLz8EB7PaOiGqu3OYN/XS2MqG3Q=
-  dependencies:
-    "@types/node" "*"
-
 "@types/connect@*":
   version "3.4.35"
   resolved "https://registry.npmmirror.com/@types/connect/download/@types/connect-3.4.35.tgz?cache=0&sync_timestamp=1637264533049&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fconnect%2Fdownload%2F%40types%2Fconnect-3.4.35.tgz#5fcf6ae445e4021d1fc2219a4873cc73a3bb2ad1"
@@ -853,13 +854,6 @@
     "@types/express-serve-static-core" "^4.17.18"
     "@types/qs" "*"
     "@types/serve-static" "*"
-
-"@types/form-data@0.0.33":
-  version "0.0.33"
-  resolved "https://registry.npmmirror.com/@types/form-data/download/@types/form-data-0.0.33.tgz#c9ac85b2a5fd18435b8c85d9ecb50e6d6c893ff8"
-  integrity sha1-yayFsqX9GENbjIXZ7LUObWyJP/g=
-  dependencies:
-    "@types/node" "*"
 
 "@types/graceful-fs@^4.1.2":
   version "4.1.5"
@@ -924,16 +918,6 @@
   resolved "https://registry.npmmirror.com/@types/node/download/@types/node-16.11.11.tgz#6ea7342dfb379ea1210835bada87b3c512120234"
   integrity sha512-KB0sixD67CeecHC33MYn+eYARkqTheIRNuu97y2XMjR7Wu3XibO1vaY6VBV6O/a89SPI81cEUIYT87UqUWlZNw==
 
-"@types/node@^10.0.3":
-  version "10.17.60"
-  resolved "https://registry.npmmirror.com/@types/node/download/@types/node-10.17.60.tgz#35f3d6213daed95da7f0f73e75bcc6980e90597b"
-  integrity sha1-NfPWIT2u2V2n8Pc+dbzGmA6QWXs=
-
-"@types/node@^8.0.0":
-  version "8.10.66"
-  resolved "https://registry.npmmirror.com/@types/node/download/@types/node-8.10.66.tgz#dd035d409df322acc83dff62a602f12a5783bbb3"
-  integrity sha1-3QNdQJ3zIqzIPf9ipgLxKleDu7M=
-
 "@types/parse-json@^4.0.0":
   version "4.0.0"
   resolved "https://registry.npmmirror.com/@types/parse-json/download/@types/parse-json-4.0.0.tgz?cache=0&sync_timestamp=1637269948744&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fparse-json%2Fdownload%2F%40types%2Fparse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
@@ -949,7 +933,7 @@
   resolved "https://registry.npmmirror.com/@types/prettier/download/@types/prettier-2.4.2.tgz?cache=0&sync_timestamp=1637269981935&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fprettier%2Fdownload%2F%40types%2Fprettier-2.4.2.tgz#4c62fae93eb479660c3bd93f9d24d561597a8281"
   integrity sha512-ekoj4qOQYp7CvjX8ZDBgN86w3MqQhLE1hczEJbEIjgFEumDy+na/4AJAbLXfgEWFNB2pKadM5rPFtuSGMWK7xA==
 
-"@types/qs@*", "@types/qs@^6.2.31":
+"@types/qs@*":
   version "6.9.7"
   resolved "https://registry.npmmirror.com/@types/qs/download/@types/qs-6.9.7.tgz?cache=0&sync_timestamp=1637268454704&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fqs%2Fdownload%2F%40types%2Fqs-6.9.7.tgz#63bb7d067db107cc1e457c303bc25d511febf6cb"
   integrity sha1-Y7t9Bn2xB8weRXwwO8JdUR/r9ss=
@@ -1383,11 +1367,6 @@ array-union@^2.1.0:
   resolved "https://registry.npm.taobao.org/array-union/download/array-union-2.1.0.tgz#b798420adbeb1de828d84acd8a2e23d3efe85e8d"
   integrity sha1-t5hCCtvrHego2ErNii4j0+/oXo0=
 
-asap@~2.0.6:
-  version "2.0.6"
-  resolved "https://registry.npm.taobao.org/asap/download/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
-  integrity sha1-5QNHYR1+aQlDIIu9r+vLwvuGbUY=
-
 astral-regex@^2.0.0:
   version "2.0.0"
   resolved "https://registry.nlark.com/astral-regex/download/astral-regex-2.0.0.tgz#483143c567aeed4785759c0865786dc77d7d2e31"
@@ -1403,7 +1382,7 @@ at-least-node@^1.0.0:
   resolved "https://registry.npm.taobao.org/at-least-node/download/at-least-node-1.0.0.tgz#602cd4b46e844ad4effc92a8011a3c46e0238dc2"
   integrity sha1-YCzUtG6EStTv/JKoARo8RuAjjcI=
 
-axios@0.24.0:
+axios@0.24.0, axios@^0.24.0:
   version "0.24.0"
   resolved "https://registry.npmmirror.com/axios/download/axios-0.24.0.tgz?cache=0&sync_timestamp=1635214905768&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Faxios%2Fdownload%2Faxios-0.24.0.tgz#804e6fa1e4b9c5288501dd9dff56a7a0940d20d6"
   integrity sha1-gE5voeS5xSiFAd2d/1anoJQNINY=
@@ -1610,11 +1589,6 @@ caniuse-lite@^1.0.30001280:
   resolved "https://registry.npmmirror.com/caniuse-lite/download/caniuse-lite-1.0.30001283.tgz#8573685bdae4d733ef18f78d44ba0ca5fe9e896b"
   integrity sha512-9RoKo841j1GQFSJz/nCXOj0sD7tHBtlowjYlrqIUS812x9/emfBLBt6IyMz1zIaYc/eRL8Cs6HPUVi2Hzq4sIg==
 
-caseless@^0.12.0, caseless@~0.12.0:
-  version "0.12.0"
-  resolved "https://registry.npm.taobao.org/caseless/download/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
-  integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
-
 chalk@3.0.0:
   version "3.0.0"
   resolved "https://registry.npmmirror.com/chalk/download/chalk-3.0.0.tgz#3f73c2bf526591f574cc492c51e2456349f844e4"
@@ -1760,7 +1734,7 @@ colors@^1.1.2:
   resolved "https://registry.npm.taobao.org/colors/download/colors-1.4.0.tgz#c50491479d4c1bdaed2c9ced32cf7c7dc2360f78"
   integrity sha1-xQSRR51MG9rtLJztMs98fcI2D3g=
 
-combined-stream@^1.0.6, combined-stream@^1.0.8:
+combined-stream@^1.0.8:
   version "1.0.8"
   resolved "https://registry.npm.taobao.org/combined-stream/download/combined-stream-1.0.8.tgz#c3d45a8b34fd730631a110a8a2520682b31d5a7f"
   integrity sha1-w9RaizT9cwYxoRCoolIGgrMdWn8=
@@ -1787,7 +1761,7 @@ concat-map@0.0.1:
   resolved "https://registry.npm.taobao.org/concat-map/download/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
-concat-stream@^1.5.2, concat-stream@^1.6.0, concat-stream@^1.6.2:
+concat-stream@^1.5.2:
   version "1.6.2"
   resolved "https://registry.nlark.com/concat-stream/download/concat-stream-1.6.2.tgz#904bdf194cd3122fc675c77fc4ac3d4ff0fd1a34"
   integrity sha1-kEvfGUzTEi/Gdcd/xKw9T/D9GjQ=
@@ -1864,6 +1838,13 @@ create-require@^1.1.0:
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/create-require/download/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
   integrity sha1-wdfo8eX2z8n/ZfnNNS03NIdWwzM=
+
+cron@1.7.2:
+  version "1.7.2"
+  resolved "https://registry.npm.taobao.org/cron/download/cron-1.7.2.tgz#2ea1f35c138a07edac2ac5af5084ed6fee5723db"
+  integrity sha1-LqHzXBOKB+2sKsWvUITtb+5XI9s=
+  dependencies:
+    moment-timezone "^0.5.x"
 
 cross-spawn@^7.0.0, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
   version "7.0.3"
@@ -2465,15 +2446,6 @@ fork-ts-checker-webpack-plugin@6.4.0:
     semver "^7.3.2"
     tapable "^1.0.0"
 
-form-data@^2.2.0:
-  version "2.5.1"
-  resolved "https://registry.npm.taobao.org/form-data/download/form-data-2.5.1.tgz#f2cbec57b5e59e23716e128fe44d4e5dd23895f4"
-  integrity sha1-8svsV7XlniNxbhKP5E1OXdI4lfQ=
-  dependencies:
-    asynckit "^0.4.0"
-    combined-stream "^1.0.6"
-    mime-types "^2.1.12"
-
 form-data@^3.0.0:
   version "3.0.1"
   resolved "https://registry.npm.taobao.org/form-data/download/form-data-3.0.1.tgz#ebd53791b78356a99af9a300d4282c4d5eb9755f"
@@ -2565,11 +2537,6 @@ get-package-type@^0.1.0:
   version "0.1.0"
   resolved "https://registry.nlark.com/get-package-type/download/get-package-type-0.1.0.tgz#8de2d803cff44df3bc6c456e6668b36c3926e11a"
   integrity sha1-jeLYA8/0TfO8bEVuZmizbDkm4Ro=
-
-get-port@^3.1.0:
-  version "3.2.0"
-  resolved "https://registry.npmmirror.com/get-port/download/get-port-3.2.0.tgz#dd7ce7de187c06c8bf353796ac71e099f0980ebc"
-  integrity sha1-3Xzn3hh8Bsi/NTeWrHHgmfCYDrw=
 
 get-stream@^5.0.0:
   version "5.2.0"
@@ -2670,16 +2637,6 @@ html-escaper@^2.0.0:
   resolved "https://registry.npm.taobao.org/html-escaper/download/html-escaper-2.0.2.tgz#dfd60027da36a36dfcbe236262c00a5822681453"
   integrity sha1-39YAJ9o2o238viNiYsAKWCJoFFM=
 
-http-basic@^8.1.1:
-  version "8.1.3"
-  resolved "https://registry.nlark.com/http-basic/download/http-basic-8.1.3.tgz#a7cabee7526869b9b710136970805b1004261bbf"
-  integrity sha1-p8q+51Joabm3EBNpcIBbEAQmG78=
-  dependencies:
-    caseless "^0.12.0"
-    concat-stream "^1.6.2"
-    http-response-object "^3.0.1"
-    parse-cache-control "^1.0.1"
-
 http-errors@1.7.2:
   version "1.7.2"
   resolved "https://registry.npmmirror.com/http-errors/download/http-errors-1.7.2.tgz?cache=0&sync_timestamp=1636932154238&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fhttp-errors%2Fdownload%2Fhttp-errors-1.7.2.tgz#4f5029cf13239f31036e5b2e55292bcfbcc85c8f"
@@ -2710,13 +2667,6 @@ http-proxy-agent@^4.0.1:
     "@tootallnate/once" "1"
     agent-base "6"
     debug "4"
-
-http-response-object@^3.0.1:
-  version "3.0.2"
-  resolved "https://registry.nlark.com/http-response-object/download/http-response-object-3.0.2.tgz#7f435bb210454e4360d074ef1f989d5ea8aa9810"
-  integrity sha1-f0NbshBFTkNg0HTvH5idXqiqmBA=
-  dependencies:
-    "@types/node" "^10.0.3"
 
 https-proxy-agent@^5.0.0:
   version "5.0.0"
@@ -3598,11 +3548,6 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
-m3u8-file-parser@^0.2.3:
-  version "0.2.4"
-  resolved "https://registry.nlark.com/m3u8-file-parser/download/m3u8-file-parser-0.2.4.tgz#a7e9eea5decc25d0b85ce00e6de767b8e24740e7"
-  integrity sha1-p+nupd7MJdC4XOAObednuOJHQOc=
-
 macos-release@^2.5.0:
   version "2.5.0"
   resolved "https://registry.nlark.com/macos-release/download/macos-release-2.5.0.tgz?cache=0&sync_timestamp=1630503258306&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fmacos-release%2Fdownload%2Fmacos-release-2.5.0.tgz#067c2c88b5f3fb3c56a375b2ec93826220fa1ff2"
@@ -3719,6 +3664,18 @@ mkdirp@^0.5.4:
   integrity sha1-2Rzv1i0UNsoPQWIOJRKI1CAJne8=
   dependencies:
     minimist "^1.2.5"
+
+moment-timezone@^0.5.x:
+  version "0.5.34"
+  resolved "https://registry.npmmirror.com/moment-timezone/download/moment-timezone-0.5.34.tgz#a75938f7476b88f155d3504a9343f7519d9a405c"
+  integrity sha512-3zAEHh2hKUs3EXLESx/wsgw6IQdusOT8Bxm3D9UrHPQR7zlMmzwybC8zHEM1tQ4LJwP7fcxrWr8tuBg05fFCbg==
+  dependencies:
+    moment ">= 2.9.0"
+
+"moment@>= 2.9.0":
+  version "2.29.1"
+  resolved "https://registry.nlark.com/moment/download/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
+  integrity sha1-sr52n6MZQL6e7qZGnAdeNQBvo9M=
 
 ms@2.0.0:
   version "2.0.0"
@@ -3934,11 +3891,6 @@ parent-module@^1.0.0:
   dependencies:
     callsites "^3.0.0"
 
-parse-cache-control@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.nlark.com/parse-cache-control/download/parse-cache-control-1.0.1.tgz#8eeab3e54fa56920fe16ba38f77fa21aacc2d74e"
-  integrity sha1-juqz5U+laSD+Fro493+iGqzC104=
-
 parse-json@^5.0.0:
   version "5.2.0"
   resolved "https://registry.npmmirror.com/parse-json/download/parse-json-5.2.0.tgz?cache=0&sync_timestamp=1637475717072&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fparse-json%2Fdownload%2Fparse-json-5.2.0.tgz#c76fc66dee54231c962b22bcc8a72cf2f99753cd"
@@ -4075,13 +4027,6 @@ progress@^2.0.0:
   resolved "https://registry.npm.taobao.org/progress/download/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha1-foz42PW48jnBvGi+tOt4Vn1XLvg=
 
-promise@^8.0.0:
-  version "8.1.0"
-  resolved "https://registry.npm.taobao.org/promise/download/promise-8.1.0.tgz#697c25c3dfe7435dd79fcd58c38a135888eaf05e"
-  integrity sha1-aXwlw9/nQ13Xn81Yw4oTWIjq8F4=
-  dependencies:
-    asap "~2.0.6"
-
 prompts@^2.0.1:
   version "2.4.2"
   resolved "https://registry.npmmirror.com/prompts/download/prompts-2.4.2.tgz?cache=0&sync_timestamp=1633642560605&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fprompts%2Fdownload%2Fprompts-2.4.2.tgz#7b57e73b3a48029ad10ebd44f74b01722a4cb069"
@@ -4121,7 +4066,7 @@ qs@6.7.0:
   resolved "https://registry.npm.taobao.org/qs/download/qs-6.7.0.tgz?cache=0&sync_timestamp=1616385315895&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fqs%2Fdownload%2Fqs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
   integrity sha1-QdwaAV49WB8WIXdr4xr7KHapsbw=
 
-qs@^6.4.0, qs@^6.9.4:
+qs@^6.9.4:
   version "6.10.1"
   resolved "https://registry.npm.taobao.org/qs/download/qs-6.10.1.tgz?cache=0&sync_timestamp=1616385315895&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fqs%2Fdownload%2Fqs-6.10.1.tgz#4931482fa8d647a5aab799c5271d2133b981fb6a"
   integrity sha1-STFIL6jWR6Wqt5nFJx0hM7mB+2o=
@@ -4634,22 +4579,6 @@ symbol-tree@^3.2.4:
   resolved "https://registry.npm.taobao.org/symbol-tree/download/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
   integrity sha1-QwY30ki6d+B4iDlR+5qg7tfGP6I=
 
-sync-request@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.nlark.com/sync-request/download/sync-request-6.1.0.tgz#e96217565b5e50bbffe179868ba75532fb597e68"
-  integrity sha1-6WIXVlteULv/4XmGi6dVMvtZfmg=
-  dependencies:
-    http-response-object "^3.0.1"
-    sync-rpc "^1.2.1"
-    then-request "^6.0.0"
-
-sync-rpc@^1.2.1:
-  version "1.3.6"
-  resolved "https://registry.nlark.com/sync-rpc/download/sync-rpc-1.3.6.tgz#b2e8b2550a12ccbc71df8644810529deb68665a7"
-  integrity sha1-suiyVQoSzLxx34ZEgQUp3raGZac=
-  dependencies:
-    get-port "^3.1.0"
-
 table@^6.0.9:
   version "6.7.3"
   resolved "https://registry.npmmirror.com/table/download/table-6.7.3.tgz#255388439715a738391bd2ee4cbca89a4d05a9b7"
@@ -4712,23 +4641,6 @@ text-table@^0.2.0:
   version "0.2.0"
   resolved "https://registry.npm.taobao.org/text-table/download/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
-
-then-request@^6.0.0:
-  version "6.0.2"
-  resolved "https://registry.nlark.com/then-request/download/then-request-6.0.2.tgz#ec18dd8b5ca43aaee5cb92f7e4c1630e950d4f0c"
-  integrity sha1-7Bjdi1ykOq7ly5L35MFjDpUNTww=
-  dependencies:
-    "@types/concat-stream" "^1.6.0"
-    "@types/form-data" "0.0.33"
-    "@types/node" "^8.0.0"
-    "@types/qs" "^6.2.31"
-    caseless "~0.12.0"
-    concat-stream "^1.6.0"
-    form-data "^2.2.0"
-    http-basic "^8.1.1"
-    http-response-object "^3.0.1"
-    promise "^8.0.0"
-    qs "^6.4.0"
 
 throat@^6.0.1:
   version "6.0.1"
@@ -4887,14 +4799,6 @@ tsutils@^3.21.0:
   integrity sha1-tIcX05TOpsHglpg+7Vjp1hcVtiM=
   dependencies:
     tslib "^1.8.1"
-
-twitch-streamlink-extractor@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.npmmirror.com/twitch-streamlink-extractor/download/twitch-streamlink-extractor-2.0.1.tgz#d400b3ba6e09e54495d98ffa8fab21ad335c1c91"
-  integrity sha1-1ACzum4J5USV2Y/6j6shrTNcHJE=
-  dependencies:
-    m3u8-file-parser "^0.2.3"
-    sync-request "^6.1.0"
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"

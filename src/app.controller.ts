@@ -1,6 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { AppService } from './app.service';
-import * as twitchStream from 'twitch-streamlink-extractor';
 
 @Controller()
 export class AppController {
@@ -11,13 +10,13 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('twitch')
-  getTwitch(@Query('channel') channel: string) {
-    return twitchStream.extract(
-      channel,
-      'kimne78kx3ncx6brgo4mv6wki5h1ko',
-      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36',
-      'loYuleQH9NelYZIQv1vcXYP8QeGKy7Mq',
-    );
+  @Get('criteria')
+  async getCriteria() {
+    return this.appService.getCriteria();
+  }
+
+  @Get('songs')
+  async getSongs(@Query('name') name: string) {
+    return this.appService.getSongs(name);
   }
 }
