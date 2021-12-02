@@ -16,7 +16,7 @@ export class AppController {
   }
 
   @Get('songs')
-  async getSongs(@Query('name') name: string) {
-    return this.appService.getSongs(name);
+  async getSongs() {
+    return this.appService.getSongs();
   }
 }

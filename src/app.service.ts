@@ -35,8 +35,8 @@ export class AppService implements OnApplicationBootstrap {
     return this.criteria;
   }
 
-  getSongs(name: string) {
-    return this.songs[name] || [];
+  getSongs() {
+    return this.songs;
   }
 
   @Interval(60 * 60 * 1000)
