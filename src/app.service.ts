@@ -1,6 +1,7 @@
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { Interval } from '@nestjs/schedule';
 import axios from 'axios';
+import * as TwitchBot from 'twitch-bot';
 
 const baseURL = 'http://magict.cn:5000/webapi';
 
@@ -20,6 +21,7 @@ export class AppService implements OnApplicationBootstrap {
   cookie: string[] = [];
   criteria: any[] = [];
   songs: any = {};
+  bot: any;
 
   onApplicationBootstrap() {
     this.login().then(() => {
@@ -39,7 +41,7 @@ export class AppService implements OnApplicationBootstrap {
     return this.songs;
   }
 
-  @Interval(60 * 60 * 1000)
+  @Interval(5 * 60 * 1000)
   async load() {
     console.log('load ds data');
 
