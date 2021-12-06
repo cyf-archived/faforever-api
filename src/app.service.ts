@@ -1,7 +1,6 @@
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { Interval } from '@nestjs/schedule';
 import axios from 'axios';
-import * as TwitchBot from 'twitch-bot';
 
 const baseURL = 'http://magict.cn:5000/webapi';
 
