@@ -1,5 +1,5 @@
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
-import { Interval } from '@nestjs/schedule';
+import { Cron, Interval } from '@nestjs/schedule';
 import axios from 'axios';
 
 const baseURL = 'http://magict.cn:5000/webapi';
@@ -67,6 +67,7 @@ export class AppService implements OnApplicationBootstrap {
     }
   }
 
+  @Cron('0 0 0 * * *')
   async login() {
     const { data, headers } = await request(
       '/auth.cgi?api=SYNO.API.Auth&version=3&method=login&account=cyfwlp&passwd=5267373&session=AudioStation&format=cookie',
