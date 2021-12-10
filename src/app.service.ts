@@ -42,7 +42,7 @@ export class AppService implements OnApplicationBootstrap {
   }
 
   getSid() {
-    return this.sid;
+    return { sid: this.sid };
   }
 
   @Interval(5 * 60 * 1000)
