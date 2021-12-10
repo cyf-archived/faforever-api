@@ -9,6 +9,10 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+  @Get('sid')
+  async getSid() {
+    return this.appService.getSid();
+  }
 
   @Get('criteria')
   async getCriteria() {

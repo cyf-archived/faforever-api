@@ -21,6 +21,7 @@ export class AppService implements OnApplicationBootstrap {
   criteria: any[] = [];
   songs: any = {};
   bot: any;
+  sid: string;
 
   onApplicationBootstrap() {
     this.login().then(() => {
@@ -38,6 +39,10 @@ export class AppService implements OnApplicationBootstrap {
 
   getSongs() {
     return this.songs;
+  }
+
+  getSid() {
+    return this.sid;
   }
 
   @Interval(5 * 60 * 1000)
@@ -63,11 +68,12 @@ export class AppService implements OnApplicationBootstrap {
   }
 
   async login() {
-    const { headers } = await request(
+    const { data, headers } = await request(
       '/auth.cgi?api=SYNO.API.Auth&version=3&method=login&account=cyfwlp&passwd=5267373&session=AudioStation&format=cookie',
     );
     if (headers['set-cookie']) {
       this.cookie = headers['set-cookie'];
+      this.sid = data.data.sid;
     }
   }
 
