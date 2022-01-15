@@ -57,7 +57,7 @@ export class AppService implements OnApplicationBootstrap {
     const { data } = await this.getEntry();
     if (data.data && data.data.albums.length > 0) {
       this.criteria = data.data.albums;
-      this.musics = [];
+      const musics = [];
 
       for (let index = 0; index < this.criteria.length; index++) {
         const albums = this.criteria[index];
@@ -70,11 +70,13 @@ export class AppService implements OnApplicationBootstrap {
           this.criteria[index].count = songs.data.songs.length;
           for (const song of songs.data.songs) {
             if (song?.additional?.song_audio?.duration / 60 < 7) {
-              this.musics.push(song);
+              musics.push(song);
             }
           }
         }
       }
+
+      this.musics = musics;
     }
   }
 
