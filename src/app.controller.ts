@@ -14,6 +14,11 @@ export class AppController {
     return this.appService.getSid();
   }
 
+  @Get('random')
+  async getRandom() {
+    return this.appService.getRandom();
+  }
+
   @Get('criteria')
   async getCriteria() {
     return this.appService.getCriteria();

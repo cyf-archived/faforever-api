@@ -20,6 +20,7 @@ export class AppService implements OnApplicationBootstrap {
   cookie: string[] = [];
   criteria: any[] = [];
   songs: any = {};
+  musics: any[] = [];
   bot: any;
   sid: string;
 
@@ -45,13 +46,18 @@ export class AppService implements OnApplicationBootstrap {
     return { sid: this.sid };
   }
 
+  getRandom() {
+    const index = Math.floor(Math.random() * this.musics.length);
+    return this.musics[index] ?? this.musics[0] ?? {};
+  }
+
   @Interval(5 * 60 * 1000)
   async load() {
     console.log('load ds data');
-
     const { data } = await this.getEntry();
     if (data.data && data.data.albums.length > 0) {
       this.criteria = data.data.albums;
+      this.musics = [];
 
       for (let index = 0; index < this.criteria.length; index++) {
         const albums = this.criteria[index];
@@ -62,6 +68,11 @@ export class AppService implements OnApplicationBootstrap {
         if (songs.data && songs.data.songs.length > 0) {
           this.songs[albums.name] = songs.data.songs;
           this.criteria[index].count = songs.data.songs.length;
+          for (const song of songs.data.songs) {
+            if (song?.additional?.song_audio?.duration / 60 < 7) {
+              this.musics.push(song);
+            }
+          }
         }
       }
     }
