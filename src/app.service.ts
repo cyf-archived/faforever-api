@@ -1,6 +1,14 @@
-import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  OnApplicationBootstrap,
+  OnModuleDestroy,
+  OnModuleInit,
+} from '@nestjs/common';
 import { Cron, Interval } from '@nestjs/schedule';
 import axios from 'axios';
+import { UserService } from './user.service';
+import { PrismaClient } from '@prisma/client';
 
 const baseURL = 'http://magict.cn:5000/webapi';
 
@@ -16,11 +24,26 @@ const request = (url, option = {}) => {
 };
 
 @Injectable()
-export class AppService implements OnApplicationBootstrap {
+export class AppService
+  extends PrismaClient
+  implements OnApplicationBootstrap, OnModuleInit, OnModuleDestroy
+{
+  @Inject()
+  private userService: UserService;
+
+  async onModuleInit() {
+    await this.$connect();
+  }
+
+  async onModuleDestroy() {
+    await this.$disconnect();
+  }
+
   cookie: string[] = [];
   criteria: any[] = [];
   songs: any = {};
   musics: any[] = [];
+  all_musics: any[] = [];
   bot: any;
   sid: string;
 
@@ -42,6 +65,10 @@ export class AppService implements OnApplicationBootstrap {
     return this.songs;
   }
 
+  getMusics() {
+    return this.musics;
+  }
+
   getSid() {
     return { sid: this.sid };
   }
@@ -51,6 +78,48 @@ export class AppService implements OnApplicationBootstrap {
     return this.musics[index] ?? this.musics[0] ?? {};
   }
 
+  async getMyLike(uuid) {
+    const user = await this.userService.findOrCreate(uuid);
+    const prisma = new PrismaClient();
+
+    const likes = await prisma.like.findMany({
+      where: {
+        userId: user.id,
+      },
+    });
+
+    const likeMusics = [];
+    for (const like of likes) {
+      const target = this.all_musics.find((i) => i.path === like.path);
+      if (target) {
+        likeMusics.push(target);
+      }
+    }
+    return likeMusics;
+  }
+
+  async likeOne(uuid, path) {
+    const user = await this.userService.findOrCreate(uuid);
+
+    const exist = await this.like.findFirst({
+      where: {
+        userId: user.id,
+        path,
+      },
+    });
+
+    if (exist) {
+      return await this.like.delete({ where: { id: exist.id } });
+    }
+
+    return await this.like.create({
+      data: {
+        userId: user.id,
+        path,
+      },
+    });
+  }
+
   @Interval(5 * 60 * 1000)
   async load() {
     console.log('load ds data');
@@ -58,6 +127,7 @@ export class AppService implements OnApplicationBootstrap {
     if (data.data && data.data.albums.length > 0) {
       this.criteria = data.data.albums;
       const musics = [];
+      const all_musics = [];
 
       for (let index = 0; index < this.criteria.length; index++) {
         const albums = this.criteria[index];
@@ -69,6 +139,7 @@ export class AppService implements OnApplicationBootstrap {
           this.songs[albums.name] = songs.data.songs;
           this.criteria[index].count = songs.data.songs.length;
           for (const song of songs.data.songs) {
+            all_musics.push(song);
             if (song?.additional?.song_audio?.duration / 60 < 7) {
               musics.push(song);
             }
@@ -77,6 +148,7 @@ export class AppService implements OnApplicationBootstrap {
       }
 
       this.musics = musics;
+      this.all_musics = all_musics;
     }
   }
 
