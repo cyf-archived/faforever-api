@@ -1,14 +1,8 @@
-import {
-  Inject,
-  Injectable,
-  OnApplicationBootstrap,
-  OnModuleDestroy,
-  OnModuleInit,
-} from '@nestjs/common';
+import { Inject, Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { Cron, Interval } from '@nestjs/schedule';
 import axios from 'axios';
 import { UserService } from './user.service';
-import { PrismaClient } from '@prisma/client';
+import { PrismaService } from './prisma.service';
 
 const baseURL = 'http://magict.cn:5000/webapi';
 
@@ -24,20 +18,11 @@ const request = (url, option = {}) => {
 };
 
 @Injectable()
-export class AppService
-  extends PrismaClient
-  implements OnApplicationBootstrap, OnModuleInit, OnModuleDestroy
-{
+export class AppService implements OnApplicationBootstrap {
   @Inject()
   private userService: UserService;
-
-  async onModuleInit() {
-    await this.$connect();
-  }
-
-  async onModuleDestroy() {
-    await this.$disconnect();
-  }
+  @Inject()
+  private prismaService: PrismaService;
 
   cookie: string[] = [];
   criteria: any[] = [];
@@ -80,7 +65,6 @@ export class AppService
 
   async getMyLike(uuid) {
     const user = await this.userService.findOrCreate(uuid);
-    const prisma = new PrismaClient();
 
     const likes = await prisma.like.findMany({
       where: {
@@ -101,7 +85,7 @@ export class AppService
   async likeOne(uuid, path) {
     const user = await this.userService.findOrCreate(uuid);
 
-    const exist = await this.like.findFirst({
+    const exist = await this.prismaService.like.findFirst({
       where: {
         userId: user.id,
         path,
@@ -109,10 +93,10 @@ export class AppService
     });
 
     if (exist) {
-      return await this.like.delete({ where: { id: exist.id } });
+      return await this.prismaService.like.delete({ where: { id: exist.id } });
     }
 
-    return await this.like.create({
+    return await this.prismaService.like.create({
       data: {
         userId: user.id,
         path,

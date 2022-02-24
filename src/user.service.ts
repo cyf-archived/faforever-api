@@ -1,23 +1,16 @@
-import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { Inject, Injectable } from '@nestjs/common';
+import { PrismaService } from './prisma.service';
 
 @Injectable()
-export class UserService
-  extends PrismaClient
-  implements OnModuleInit, OnModuleDestroy
-{
-  async onModuleInit() {
-    await this.$connect();
-  }
-  async onModuleDestroy() {
-    await this.$disconnect();
-  }
+export class UserService {
+  @Inject()
+  private prismaService: PrismaService;
+
   async findOrCreate(uuid = null) {
-    const prisma = new PrismaClient();
     let user;
 
     if (uuid) {
-      user = await prisma.user.findFirst({
+      user = await this.prismaService.user.findFirst({
         where: {
           uuid,
         },
@@ -25,7 +18,7 @@ export class UserService
     }
 
     if (!user) {
-      return await prisma.user.create({
+      return await this.prismaService.user.create({
         data: {
           uuid,
         },
