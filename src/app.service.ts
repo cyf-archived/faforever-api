@@ -66,7 +66,7 @@ export class AppService implements OnApplicationBootstrap {
   async getMyLike(uuid) {
     const user = await this.userService.findOrCreate(uuid);
 
-    const likes = await prisma.like.findMany({
+    const likes = await this.prismaService.like.findMany({
       where: {
         userId: user.id,
       },
