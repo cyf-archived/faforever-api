@@ -37,13 +37,13 @@ export class AppController {
 
   @Get('like')
   async getMyLike(@Req() req: Request) {
-    const uuid = req.headers['user_uuid'] ?? null;
+    const uuid = req.headers['useruuid'] ?? null;
     return await this.appService.getMyLike(uuid);
   }
 
   @Post('like')
   async like(@Req() req: Request, @Body('path') path: string) {
-    const uuid = req.headers['user_uuid'] ?? null;
+    const uuid = req.headers['useruuid'] ?? null;
     return await this.appService.likeOne(uuid, path);
   }
 }
