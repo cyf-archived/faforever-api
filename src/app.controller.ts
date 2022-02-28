@@ -35,6 +35,11 @@ export class AppController {
     return this.appService.getMusics();
   }
 
+  @Get('paths')
+  async getPaths() {
+    return this.appService.getPaths();
+  }
+
   @Get('like')
   async getMyLike(@Req() req: Request) {
     const uuid = req.headers['useruuid'] ?? null;

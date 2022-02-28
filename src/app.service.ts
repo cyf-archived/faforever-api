@@ -29,6 +29,7 @@ export class AppService implements OnApplicationBootstrap {
   songs: any = {};
   musics: any[] = [];
   all_musics: any[] = [];
+  titles: any = {};
   bot: any;
   sid: string;
 
@@ -52,6 +53,58 @@ export class AppService implements OnApplicationBootstrap {
 
   getMusics() {
     return this.musics;
+  }
+
+  getTitleSort(title: string) {
+    return title
+      .split(/-/)
+      .map((i) =>
+        `${i ?? ''}`
+          .replace(/(\d)+\.(\d)+\.(\d)+/g, '') // 删除xx.xx.xx日期
+          .replace(/（(.*)）|【(.*)】|\[(.*)\]|\((.*)\)/g, '') // 删除诸如 [无损] （录音室版） 等后缀
+          .trim(),
+      )
+      .filter((i) => !/(.*)歌友会(.*)|(.*)茶话会(.*)|(.*)陈一发(.*)/.test(i)) // 过滤分段中是 xxx会 和发姐名字的片段
+      .map((i) => i.toLocaleLowerCase())
+      .join('');
+  }
+
+  getPaths() {
+    const title2paths = this.musics.reduce((result, item) => {
+      const title = this.getTitleSort(item.title);
+      if (!result[title]) {
+        result[title] = [];
+      }
+      result[title].push(item.path);
+      return result;
+    }, {});
+
+    this.titles = title2paths;
+
+    let max = 0;
+
+    let max_title = '';
+    for (const key in this.songs) {
+      for (let index = 0; index < this.songs[key].length; index++) {
+        const song = this.songs[key][index];
+        const title = this.getTitleSort(song.title);
+        this.songs[key][index].paths = this.titles[title] ?? [];
+        if (
+          this.songs[key][index].paths.length > max &&
+          this.songs[key][index].paths.length < 59
+        ) {
+          max = this.songs[key][index].paths.length;
+          max_title = title;
+        }
+        this.songs[key][index].search_key = title;
+      }
+    }
+
+    return {
+      max,
+      max_title,
+      titles: this.titles,
+    };
   }
 
   getSid() {
@@ -124,7 +177,12 @@ export class AppService implements OnApplicationBootstrap {
           this.criteria[index].count = songs.data.songs.length;
           for (const song of songs.data.songs) {
             all_musics.push(song);
-            if (song?.additional?.song_audio?.duration / 60 < 7) {
+            if (
+              // song?.additional?.song_audio?.duration / 60 < 7 &&
+              !['直播聊天邮件合集', '直播集锦', '特别活动'].includes(
+                song?.additional?.song_tag?.album,
+              )
+            ) {
               musics.push(song);
             }
           }
@@ -133,6 +191,7 @@ export class AppService implements OnApplicationBootstrap {
 
       this.musics = musics;
       this.all_musics = all_musics;
+      this.getPaths();
     }
   }
 
