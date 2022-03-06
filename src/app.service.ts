@@ -228,24 +228,44 @@ export class AppService implements OnApplicationBootstrap {
     });
   }
 
+  async contributeLrc(title: string, lrc: string) {
+    const is = await this.prismaService.lrc.count({
+      where: {
+        title,
+        checked: true,
+      },
+    });
+
+    if (is > 0) {
+      return { msg: '歌曲已有人贡献，感谢您的提交。', type: 'warning' };
+    }
+
+    await this.prismaService.lrc.create({
+      data: {
+        title,
+        lrc,
+      },
+    });
+
+    return { msg: '贡献成功，等待管理员审核~', type: 'success' };
+  }
+
   async getLrc(song_title: string) {
-    const bitbucket = `https://bitbucket.org/rojerchen95/faforever-lrc/raw/master/${encodeURI(
-      song_title,
-    )}.lrc?_t=${new Date().valueOf()}`;
     try {
-      const { data } = await axios.get(bitbucket);
-
-      return data;
-    } catch (error) {
+      const lrc = await this.prismaService.lrc.findFirst({
+        where: {
+          title: song_title,
+          checked: true,
+        },
+      });
+      if (lrc) return lrc.lrc;
       const title = this.getTitleSort(song_title);
-
       const { data: songs_result } = await axios.get(
         'http://neteasecloudmusicapi.eqistu.cn/cloudsearch',
         {
           params: { keywords: title },
         },
       );
-
       if (songs_result.code === 200 && songs_result.result.songCount > 0) {
         const id = songs_result.result.songs[0].id;
         const { data: lrc_result } = await axios.get(
@@ -254,13 +274,10 @@ export class AppService implements OnApplicationBootstrap {
             params: { id },
           },
         );
-
         if (lrc_result.code === 200 && lrc_result.lrc.lyric)
-          return `[00:00.000] 歌词来自网络可能不准~\n${lrc_result.lrc.lyric}`;
+          return `[00:00.000] 此歌词来自网络可能不准~\n${lrc_result.lrc.lyric}`;
       }
-
-      console.log('title', title);
-
+    } catch (error) {
       return '[0:0.00]暂无歌词';
     }
   }

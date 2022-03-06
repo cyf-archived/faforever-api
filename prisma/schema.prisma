@@ -24,3 +24,11 @@ model Like {
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
 }
+
+model Lrc {
+  id        Int      @id @default(autoincrement())
+  title     String   @db.VarChar(255)
+  lrc       String   @db.Text
+  checked   Boolean  @default(false) @db.TinyInt
+  createdAt DateTime @default(now())
+}

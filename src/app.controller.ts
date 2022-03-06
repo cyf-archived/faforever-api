@@ -56,4 +56,9 @@ export class AppController {
   async getLrc(@Query('title') title) {
     return await this.appService.getLrc(title);
   }
+
+  @Post('lrc')
+  async contributeLrc(@Body('title') title, @Body('lrc') lrc) {
+    return await this.appService.contributeLrc(title, lrc);
+  }
 }
