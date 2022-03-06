@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req } from '@nestjs/common';
 import { Request } from 'express';
 import { AppService } from './app.service';
 
@@ -50,5 +50,10 @@ export class AppController {
   async like(@Req() req: Request, @Body('path') path: string) {
     const uuid = req.headers['useruuid'] ?? null;
     return await this.appService.likeOne(uuid, path);
+  }
+
+  @Get('lrc')
+  async getLrc(@Query('title') title) {
+    return await this.appService.getLrc(title);
   }
 }

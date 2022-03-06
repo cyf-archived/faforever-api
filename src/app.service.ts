@@ -227,4 +227,41 @@ export class AppService implements OnApplicationBootstrap {
       },
     });
   }
+
+  async getLrc(song_title: string) {
+    const bitbucket = `https://bitbucket.org/rojerchen95/faforever-lrc/raw/master/${encodeURI(
+      song_title,
+    )}.lrc?_t=${new Date().valueOf()}`;
+    try {
+      const { data } = await axios.get(bitbucket);
+
+      return data;
+    } catch (error) {
+      const title = this.getTitleSort(song_title);
+
+      const { data: songs_result } = await axios.get(
+        'http://neteasecloudmusicapi.eqistu.cn/cloudsearch',
+        {
+          params: { keywords: title },
+        },
+      );
+
+      if (songs_result.code === 200 && songs_result.result.songCount > 0) {
+        const id = songs_result.result.songs[0].id;
+        const { data: lrc_result } = await axios.get(
+          'http://neteasecloudmusicapi.eqistu.cn/lyric',
+          {
+            params: { id },
+          },
+        );
+
+        if (lrc_result.code === 200 && lrc_result.lrc.lyric)
+          return `[00:00.000] 歌词来自网络可能不准~\n${lrc_result.lrc.lyric}`;
+      }
+
+      console.log('title', title);
+
+      return '[0:0.00]暂无歌词';
+    }
+  }
 }
