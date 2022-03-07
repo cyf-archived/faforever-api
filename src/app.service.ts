@@ -281,11 +281,13 @@ export class AppService implements OnApplicationBootstrap {
           lrc_result.code === 200 &&
           lrc_result.lrc.lyric &&
           lrc_result.sgc === false
-        )
+        ) {
           return `[00:00.000] 此歌词来自网络可能不准~\n${lrc_result.lrc.lyric}`;
+        }
       }
     } catch (error) {
-      return '[0:0.00]暂无歌词';
+      //,,
     }
+    return '[0:0.00]暂无歌词';
   }
 }
