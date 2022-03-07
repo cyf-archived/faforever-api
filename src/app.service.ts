@@ -123,6 +123,9 @@ export class AppService implements OnApplicationBootstrap {
       where: {
         userId: user.id,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
 
     const likeMusics = [];
@@ -274,7 +277,11 @@ export class AppService implements OnApplicationBootstrap {
             params: { id },
           },
         );
-        if (lrc_result.code === 200 && lrc_result.lrc.lyric)
+        if (
+          lrc_result.code === 200 &&
+          lrc_result.lrc.lyric &&
+          lrc_result.sgc === false
+        )
           return `[00:00.000] 此歌词来自网络可能不准~\n${lrc_result.lrc.lyric}`;
       }
     } catch (error) {
