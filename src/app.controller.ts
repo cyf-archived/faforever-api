@@ -12,7 +12,7 @@ export class AppController {
   }
   @Get('sid')
   async getSid() {
-    return this.appService.getSid();
+    return '';
   }
 
   @Get('random')
