@@ -35,9 +35,7 @@ export class AppService implements OnApplicationBootstrap {
   sid: string;
 
   onApplicationBootstrap() {
-    this.login().then(() => {
-      this.load();
-    });
+    this.load();
   }
 
   getHello(): string {
@@ -161,9 +159,10 @@ export class AppService implements OnApplicationBootstrap {
     });
   }
 
-  @Interval(5 * 60 * 1000)
+  @Cron('0 0 */3 * * *')
   async load() {
     console.log('load ds data');
+    await this.login();
     const { data } = await this.getEntry();
     if (data.data && data.data.albums.length > 0) {
       this.criteria = data.data.albums;
@@ -199,7 +198,6 @@ export class AppService implements OnApplicationBootstrap {
     }
   }
 
-  @Cron('0 0 * * * *')
   async login() {
     const { data, headers } = await request(
       '/auth.cgi?api=SYNO.API.Auth&version=3&method=login&account=cyfwlp&passwd=5267373&session=AudioStation&format=cookie',
