@@ -13,6 +13,7 @@ const request = (url, option = {}) => {
     url,
     baseURL,
     withCredentials: true,
+    timeout: 60 * 1000,
     ...option,
   });
 };
@@ -198,7 +199,7 @@ export class AppService implements OnApplicationBootstrap {
     }
   }
 
-  @Cron('0 0 0 * * *')
+  @Cron('0 0 * * * *')
   async login() {
     const { data, headers } = await request(
       '/auth.cgi?api=SYNO.API.Auth&version=3&method=login&account=cyfwlp&passwd=5267373&session=AudioStation&format=cookie',
