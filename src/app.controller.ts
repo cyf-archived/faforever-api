@@ -10,6 +10,17 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Get('build')
+  async build() {
+    return this.appService.build();
+  }
+
+  @Get('hot')
+  async hot() {
+    return this.appService.hot();
+  }
+
   @Get('sid')
   async getSid() {
     return '';

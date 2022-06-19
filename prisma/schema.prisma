@@ -20,6 +20,7 @@ model User {
 model Like {
   id        Int      @id @default(autoincrement())
   path      String   @db.VarChar(255)
+  name      String?  @db.VarChar(255)
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
   userId    Int

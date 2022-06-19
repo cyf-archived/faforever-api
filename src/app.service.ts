@@ -3,6 +3,7 @@ import { Cron, Interval } from '@nestjs/schedule';
 import axios from 'axios';
 import { UserService } from './user.service';
 import { PrismaService } from './prisma.service';
+import { Prisma } from '@prisma/client';
 
 const baseURL = 'http://magict.cn:5000/webapi';
 
@@ -30,6 +31,7 @@ export class AppService implements OnApplicationBootstrap {
   songs: any = {};
   musics: any[] = [];
   all_musics: any[] = [];
+  most_sing: any[] = [];
   titles: any = {};
   bot: any;
   sid: string;
@@ -55,21 +57,23 @@ export class AppService implements OnApplicationBootstrap {
   }
 
   getTitleSort(title: string) {
+    if (title.indexOf('我陈一发最牛逼') >= 0) return '我陈一发最牛逼';
     return title
-      .split(/-/)
+      .split(/-+|－+|—+/)
       .map((i) =>
         `${i ?? ''}`
+          .replace(/\d{8}/g, '') // 删除xx.xx.xx日期
           .replace(/(\d)+\.(\d)+\.(\d)+/g, '') // 删除xx.xx.xx日期
           .replace(/（(.*)）|【(.*)】|\[(.*)\]|\((.*)\)/g, '') // 删除诸如 [无损] （录音室版） 等后缀
           .trim(),
       )
       .filter((i) => !/(.*)歌友会(.*)|(.*)茶话会(.*)|(.*)陈一发(.*)/.test(i)) // 过滤分段中是 xxx会 和发姐名字的片段
-      .map((i) => i.toLocaleLowerCase())
+      .map((i) => i.trim().toLocaleLowerCase())
       .join('');
   }
 
   getPaths() {
-    const title2paths = this.musics.reduce((result, item) => {
+    const title2paths = this.all_musics.reduce((result, item) => {
       const title = this.getTitleSort(item.title);
       if (!result[title]) {
         result[title] = [];
@@ -79,6 +83,23 @@ export class AppService implements OnApplicationBootstrap {
     }, {});
 
     this.titles = title2paths;
+    this.most_sing = Object.keys(title2paths).reduce<any>((ret, title) => {
+      if (!title) return ret;
+      let target = ret.find((i) => i.title === title);
+      if (!target) {
+        target = {
+          title,
+          count: 0,
+        };
+        ret.push(target);
+      }
+
+      target.count += title2paths[title].length;
+
+      return ret;
+    }, []);
+
+    this.most_sing.sort((a, b) => b.count - a.count);
 
     let max = 0;
 
@@ -150,13 +171,47 @@ export class AppService implements OnApplicationBootstrap {
     if (exist) {
       return await this.prismaService.like.delete({ where: { id: exist.id } });
     }
+    const target = this.all_musics.find((i) => i.path === path);
 
     return await this.prismaService.like.create({
       data: {
         userId: user.id,
         path,
+        name: target ? this.getTitleSort(target.title) : null,
       },
     });
+  }
+
+  async build() {
+    const likes = await this.prismaService.like.findMany({
+      where: {
+        name: null,
+      },
+    });
+
+    for (const like of likes) {
+      const target = this.all_musics.find((i) => i.path === like.path);
+      if (target) {
+        await this.prismaService.like.update({
+          where: { id: like.id },
+          data: {
+            name: this.getTitleSort(target.title),
+          },
+        });
+      }
+    }
+  }
+
+  async hot() {
+    const like_hot = await this.prismaService.$queryRaw(
+      Prisma.sql`select \`name\` as \`title\`, count(\`id\`) as \`count\` from \`Like\` where \`name\` <> '' OR \`name\` is not null group by \`name\` order by \`count\` DESC`,
+    );
+
+    return {
+      like_hot,
+      sing_hot: this.most_sing,
+      titles: this.titles,
+    };
   }
 
   @Cron('0 0 */3 * * *')
