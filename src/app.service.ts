@@ -214,7 +214,7 @@ export class AppService implements OnApplicationBootstrap {
     };
   }
 
-  @Cron('0 0 */3 * * *')
+  @Cron('0 0 */24 * * *')
   async load() {
     console.log('load ds data');
     await this.login();
