@@ -5,7 +5,7 @@ import { UserService } from './user.service';
 import { PrismaService } from './prisma.service';
 import { Prisma } from '@prisma/client';
 
-const baseURL = 'http://magict.cn:5000/webapi';
+const baseURL = 'http://www.magict.cn:5000/webapi';
 
 axios.defaults.withCredentials = true;
 
