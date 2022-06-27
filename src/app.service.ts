@@ -5,7 +5,7 @@ import { UserService } from './user.service';
 import { PrismaService } from './prisma.service';
 import { Prisma } from '@prisma/client';
 
-const baseURL = 'http://www.magict.cn:5000/webapi';
+const baseURL = 'http://[2409:8a28:2405:b751::a7b]:5000/webapi';
 
 axios.defaults.withCredentials = true;
 
@@ -14,7 +14,7 @@ const request = (url, option = {}) => {
     url,
     baseURL,
     withCredentials: true,
-    timeout: 60 * 1000,
+    timeout: 10 * 1000,
     ...option,
   });
 };
@@ -218,7 +218,9 @@ export class AppService implements OnApplicationBootstrap {
   async load() {
     console.log('load ds data');
     await this.login();
+    console.log('login success');
     const { data } = await this.getEntry();
+    console.log('getEntry success');
     if (data.data && data.data.albums.length > 0) {
       this.criteria = data.data.albums;
       const musics = [];
@@ -230,6 +232,7 @@ export class AppService implements OnApplicationBootstrap {
           albums.name,
           albums.album_artist,
         );
+        console.log('loadSongs success');
         if (songs.data && songs.data.songs.length > 0) {
           this.songs[albums.name] = songs.data.songs;
           this.criteria[index].count = songs.data.songs.length;
