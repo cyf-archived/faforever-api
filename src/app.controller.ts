@@ -21,6 +21,11 @@ export class AppController {
     return this.appService.hot();
   }
 
+  @Get('receive')
+  async receive(@Req() req: Request) {
+    return this.appService.receive(req.body);
+  }
+
   @Get('sid')
   async getSid() {
     return '';
