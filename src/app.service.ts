@@ -5,6 +5,7 @@ import { UserService } from './user.service';
 import { PrismaService } from './prisma.service';
 import { Prisma } from '@prisma/client';
 
+const pass = '';
 const baseURL = 'http://[2409:8a28:2405:b751::a7b]:5000/webapi';
 
 axios.defaults.withCredentials = true;
@@ -33,11 +34,10 @@ export class AppService implements OnApplicationBootstrap {
   all_musics: any[] = [];
   most_sing: any[] = [];
   titles: any = {};
-  bot: any;
   sid: string;
 
   onApplicationBootstrap() {
-    this.load();
+    // this.load();
   }
 
   getHello(): string {
@@ -54,6 +54,36 @@ export class AppService implements OnApplicationBootstrap {
 
   getMusics() {
     return this.musics;
+  }
+
+  async push() {
+    await axios.post('http://faforever.eqistu.cn/receive', {
+      criteria: this.criteria,
+      songs: this.songs,
+      musics: this.musics,
+      all_musics: this.all_musics,
+      most_sing: this.most_sing,
+      titles: this.titles,
+      pass,
+    });
+  }
+
+  async receive({
+    criteria,
+    songs,
+    musics,
+    all_musics,
+    most_sing,
+    titles,
+    pass: inputPass,
+  }) {
+    if (inputPass !== pass) return;
+    this.criteria = criteria;
+    this.songs = songs;
+    this.musics = musics;
+    this.all_musics = all_musics;
+    this.most_sing = most_sing;
+    this.titles = titles;
   }
 
   getTitleSort(title: string) {
@@ -214,7 +244,7 @@ export class AppService implements OnApplicationBootstrap {
     };
   }
 
-  @Cron('0 0 */24 * * *')
+  // @Cron('0 0 */24 * * *')
   async load() {
     console.log('load ds data');
     await this.login();
